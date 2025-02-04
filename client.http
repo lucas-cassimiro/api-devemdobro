@@ -1,0 +1,25 @@
+POST http://localhost:3333/users
+Content-Type: application/json
+
+{
+    "email": "erick@gmail.com",
+    "firstName": "Erick",
+    "lastName": "Oliveira",
+    "password": "123456"
+}
+
+###
+
+POST http://localhost:3333/users/login
+Content-Type: application/json
+
+{
+    "email": "erick@gmail.com",
+    "password": "123456"
+}
+
+###
+
+GET http://localhost:3333/users/profile
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJlcmlja0BnbWFpbC5jb20iLCJpYXQiOjE3Mzg2OTAxNjgsImV4cCI6MTczODY5Mzc2OH0.UEluI6eVrHjkH_kYuWCkS-BxRRjW_I2vpQfC05wa6fQ
