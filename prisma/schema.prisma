@@ -1,0 +1,68 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Category {
+  id       Int       @id @default(autoincrement())
+  name     String    @db.VarChar(50)
+  products Product[]
+
+  @@map("categories")
+}
+
+model Color {
+  id       Int       @id @default(autoincrement())
+  name     String    @db.VarChar(50)
+  products Product[]
+
+  @@map("colors")
+}
+
+model Product {
+  id           Int      @id @default(autoincrement())
+  name         String   @db.VarChar(100)
+  image        String
+  price        Decimal  @db.Decimal(10, 2)
+  discount     Decimal? @db.Decimal(5, 2)
+  rating       Decimal? @db.Decimal(3, 2)
+  description  String
+  created_at   DateTime @db.Timestamp(6)
+  updated_at   DateTime @db.Timestamp(6)
+  color_id     Int
+  categorie_id Int
+  size_id      Int
+  highlight    Boolean
+  categories   Category @relation(fields: [categorie_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_categories")
+  colors       Color    @relation(fields: [color_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_colors")
+  sizes        Size     @relation(fields: [size_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_size")
+  stocks       Stock[]
+
+  @@map("products")
+}
+
+model Size {
+  id       Int       @id @default(autoincrement())
+  name     String    @db.VarChar(50)
+  products Product[]
+
+  @@map("sizes")
+}
+
+model Stock {
+  id             Int      @id @default(autoincrement())
+  product_id     Int
+  status         String   @db.VarChar(100)
+  purchase_price Decimal  @db.Decimal(10, 2)
+  expiry_date    DateTime @db.Date
+  created_at     DateTime @db.Timestamp(6)
+  updated_at     DateTime @db.Timestamp(6)
+  quantity       Int
+  products       Product  @relation(fields: [product_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_products")
+
+  @@map("stocks")
+}
