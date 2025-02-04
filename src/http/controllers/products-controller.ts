@@ -15,7 +15,7 @@ export class ProductsController {
     }
 
     async create(request: Request, response: Response) {
-        const { name, price, discount, description, color_id, categorie_id, size_id, highlight, ean } = request.body
+        const { name, price, discount, description, colorId, categoryId, sizeId, highlight, ean } = request.body
 
         const productExistentInDatabase = await prisma.product.findUnique({
             where: {
@@ -29,13 +29,12 @@ export class ProductsController {
             data: {
                 name,
                 price,
+                image,
                 discount,
                 description,
-                created_at: new Date(),
-                updated_at: new Date(),
-                color_id,
-                categorie_id,
-                size_id,
+                colorId,
+                categoryId,
+                sizeId,
                 highlight,
                 ean
             }
